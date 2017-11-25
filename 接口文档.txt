@@ -1,0 +1,220 @@
+1/生成图片验证码
+请求方法:GET
+请求URL:/api/v1.0/imagecode/<image_code_id>
+数据格式:Content-Type = 'image/jpg';
+   示例:
+   使用响应对象
+   resp = make_response(image)
+   resp.set_cookie('user','python2')
+   resp.headers['Content-Type'] = 'image/jpg'
+
+请求参数:
+参数名         是否必须        参数描述
+image_code_id    是          图片验证码的编号(扩展名)
+
+返回结果:
+正确:
+返回图片使用make_response对象返回
+
+错误:
+{
+    errno=RET.DBERR,
+    errmsg='保存图片验证码失败'
+}
+
+2/发送短信验证码
+请求方法:GET
+请求URL:/api/v1.0/smscode/<mobile>,text=image_code,id=image_code_id
+
+数据格式:json
+请求参数:
+参数名         是否必须        参数说明
+mobile          是           用户输入的手机号
+text            是           用户输入的图片验证码内容
+id              是           图片验证码编号
+
+返回结果:
+正确:
+{
+    errno=RET.OK,
+    errmsg='发送成功'
+}
+
+错误:
+{
+    errno=RET.THIRDERR,
+    errmsg='发送失败'
+}
+
+
+3/注册
+请求方法:POST
+请求URL:/api/v1.0/users
+数据格式:json
+请求参数:
+参数名         是否必须        参数说明
+mobile          是           用户输入的手机号
+sms_code        是           用户输入的短信验证码
+password        是           用户输入的密码
+
+返回结果:data = user.to_dict()
+正确:
+{
+    errno=RET.OK,
+    errmsg='OK',
+    data=user.to_dict()
+}
+
+错误:
+{
+    errno=RET.DATAERR,
+    errmsg='数据错误'
+}
+
+
+4/登陆
+请求方法:POST
+请求URL:/api/v1.0/sessions
+数据格式:json
+请求参数:
+参数名         是否必须        参数描述
+mobile          是           用户登陆输入的手机号
+password        是           用户登陆输入的密码信息
+
+返回结果:
+正确:
+{
+    errno=RET.OK,
+    errmsg='OK',
+    data={'user_id':user.id}
+}
+错误:
+{
+    errno=RET.DATAERR,
+    errmsg='用户名或密码错误'
+}
+
+5/获取用户信息
+请求方法:GET
+请求URL:/api/v1.0/user
+数据格式:json
+请求参数:user_id = g.user_id
+参数名         是否必须        参数描述
+user_id         是           用户id信息(session从redis缓存中获取,使用g变量)
+
+返回结果:
+正确:
+{
+    errno=RET.OK,
+    errmsg='OK',
+    data=user.to_dict()
+}
+错误:
+{
+    errno=RET.NODATA,
+    errmsg='无效操作'
+}
+
+6/上传用户头像
+请求方法:POST
+请求URL:/api/v1.0/user/avatar
+数据格式:json
+请求参数:avatar_url = image_url(七牛空间外链域名+调用七牛云上传图片返回的图片名称)
+参数名         是否必须        参数描述
+avatar          是           用户上传的头像文件
+user_id         是           用户的id
+
+返回结果:
+正确:
+{
+    errno=RET.OK,
+    errmsg='OK',
+    data={'avatar_url':image_url}
+}
+错误:
+{
+    errno=RET.THIRDERR,
+    errmsg='七牛云上传图片失败'
+}
+
+7/修改用户信息
+请求方法:PUT
+请求URL:/api/v1.0/user/name
+数据格式:json
+请求参数:user_id = g.user_id
+参数名         是否必须        参数说明
+name            是           用户输入的用户名信息
+
+返回结果:
+正确:
+{
+    errno=RET.OK,
+    errmsg='OK',
+    data={'name':name}
+}
+错误:
+{
+    errno=RET.DBERR,
+    errmsg='保存用户信息失败'
+}
+
+
+8/实名认证
+请求方法:POST
+请求URL:/api/v1.0/user/auth
+数据格式:json
+请求参数:user_id = g.user_id
+参数名         是否必须        参数说明
+real_name       是           用户输入的真实姓名
+id_card         是           用户输入的身份证号码
+
+返回结果:
+正确:
+{
+    errno=RET.OK,
+    errmsg='OK'
+}
+错误:
+{
+    errno=RET.DBERR,
+    errmsg='保存用户实名信息失败'
+}
+
+
+9/获取用户实名信息
+请求方法:GET
+请求URL:/api/v1.0/user/auth
+数据格式:json
+请求参数:
+参数名         是否必须        参数说明
+user_id         是           用户id信息
+
+返回结果:
+正确:
+{
+    errno=RET.OK,
+    errmsg='OK',
+    data=user.auth_to_dict()
+}
+
+错误:
+{
+    errno=RET.NODATA,
+    errmsg='无效操作'
+}
+
+10/退出
+请求方法:DELETE
+请求URL:/api/v1.0/session
+数据格式:json
+请求参数:登陆验证装饰器,user_id = g.user_id
+返回结果:
+{
+    errno=RET.OK,
+    errmsg='OK'
+}
+
+
+
+
+

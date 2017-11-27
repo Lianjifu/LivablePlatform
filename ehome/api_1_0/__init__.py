@@ -4,7 +4,7 @@ from flask import Blueprint
 
 api = Blueprint('api', __name__)
 
-from . import register,profile
+from . import register,profile,house
 
 # 请求钩子
 @api.after_request

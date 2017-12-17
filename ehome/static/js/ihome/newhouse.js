@@ -16,7 +16,7 @@ $(document).ready(function(){
             //     $("#area-id").append('<option value="'+ areaId +'">'+ areaName +'</option>');
             // }
 
-            // 使用前端模板
+            // 使用前端模板 artTemplate
             rendered_html = template("areas-tmpl", {areas: resp.data});
             $("#area-id").html(rendered_html);
         } else {

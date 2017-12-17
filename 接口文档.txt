@@ -215,57 +215,60 @@ user_id         是           用户id
     errmsg='未实名认证'
 }
 
+
 11/获取城区信息
 请求方法:GET
 请求URL:/api/v1.0/areas
 数据格式:json
-请求参数:无参数
+请求参数:无参
 返回结果:
-area_list = []
-area_list = Area.query.all()
-area_json = json.dumps(area_list)
 正确:
-    之前:return jsonify(errno=RET.OK,errmsg='OK',data={'area':area_json})
-    返回:return '{"errno":0,"errmsg":"OK","data":%s}' % area_json
+areas_list = []
+areas_list = Area.query.all()
+areas_json = json.dumps(areas_list)
+  之前:return jsonify(errno=RET.OK,errmsg='OK',data={'areas':areas_json}
+  resp = '{"errno":0,"errmsg":"OK","data":%s}' % areas_json
+  return resp
+
 错误:
 {
     errno=RET.NODATA,
-    errmsg='无区域信息'
+    errmsg='无城区信息'
 }
 
-
-12发布新房源
+12/发布新房源
 请求方法:POST
 请求URL:/api/v1.0/houses
 数据格式:json
 请求参数:
 参数名         是否必须        参数描述
-title            是          房屋标题
-user_id          是          房屋发布者
-area_id          是          房屋所属的区域
-price            是          房屋的价格
-address          是          房屋所在的详细地址
-room_count       是          房屋的间数
-acreage          是          房屋的面积
-unit             是          房屋的户型描述
-capacity         是          房屋适宜住宿人数
-beds             是          房屋卧床配置
-deposit          是          房屋的押金
-min_days         是          最小入住天数
-max_days         是          最大入住天数
-facility         否          房屋的配套设施
+title           是           房屋标题
+price           是           房屋价格
+user_id         是           房屋所属用户(房东)
+area_id         是           房屋所属区域
+address         是           房屋详细地址
+room_count      是           房屋数目
+acreage         是           房屋面积
+unit            是           房屋户型描述
+capacity        是           房屋适住人数
+beds            是           卧床配置
+deposit         是           房屋押金
+min_days        是           最少入住天数
+max_days        是           最大入住天数
+facility        否           房屋配套设施
 
 返回结果:
 正确:
 {
     errno=RET.OK,
-    errmsg='OK,,
-    data={'house_id':house.id}
+    errmsg='OK',
+    data={"house_id":house.id}
 }
-错误:过滤房屋配套设施编号facilities = Facility.query.filter(Facility.id.in_(facility)).all()
+
+错误:
 {
-    errno=RET.DBERR,
-    errmsg='房屋配套设施编号不存在'
+    errno=RET.DATAERR,
+    errmsg='价格转换异常'
 }
 
 
@@ -275,11 +278,11 @@ facility         否          房屋的配套设施
 数据格式:json
 请求参数:
 参数名         是否必须        参数说明
-house_image     是           用户上传的房屋图片
-house_id        是           房屋的id
+house_id         是          房屋id
+house_image      是          房屋图片文件
 
 返回结果:
-正确:image_url = 七牛云空间外链域名 + 七牛云的文件名
+正确:image_url = 七牛空间外链域名 + 七牛云返回的文件名
 {
     errno=RET.OK,
     errmsg='OK,
@@ -289,7 +292,121 @@ house_id        是           房屋的id
 错误:
 {
     errno=RET.THIRDERR,
-    errmsg='七牛云上传失败'
+    errmsg='上传图片失败'
 }
+
+
+14/获取用户发布的房屋
+请求方法:GET
+请求URL:/api/v1.0/user/houses
+数据格式:json
+请求参数:user_id = g.user_id
+参数名         是否必须        参数说明
+user_id         是           用户id
+
+返回结果:
+正确:
+{
+    errno=RET.OK,
+    errmsg='OK',
+    data={'houses':houses_list}
+}
+
+错误:
+{
+    errno=RET.DBERR,
+    errmsg='查询用户房屋信息异常'
+}
+
+
+15/检查用户登陆状态
+请求方法:GET
+请求URL:/api/v1.0/session
+数据格式:json
+请求参数:无参数
+返回结果:
+正确:
+{
+    errno=RET.OK,
+    errmsg='true'
+    data={'name':name}
+}
+
+错误:
+{
+    errno=RET.SESSIONERR,
+    errmsg='false'
+}
+
+
+16/项目首页信息展示
+请求方法:GET
+请求URL:/api/v1.0/houses/index
+数据格式:json
+请求参数:无参
+返回结果:
+正确:
+    之前:return jsonify(errno=RET.OK,errmsg='OK',data={'houses':houses_json})
+    示例:return '{"errno":0,"errmsg":"OK","data":%s}' % houses_json
+
+错误:
+{
+    errno=RET.DBERR,
+    errmsg='查询房屋信息异常
+}
+
+
+17/房屋详情页面
+请求方法:GET
+请求URL:/api/v1.0/houses/<int:house_id>
+数据格式:json
+请求参数:
+参数名         是否必须        参数描述
+user_id         是           用户身份id
+house_id        是           房屋id
+
+返回结果:
+正确:
+{
+    errno=RET.OK,
+    errmsg='OK',
+    data={"user_id":user_id,"house":house_json}
+}
+错误:
+{
+    errno=RET.NODATA,
+    errmsg='无房屋数据'
+}
+
+
+18/房屋列表页
+请求方法:GET
+请求URL:/api/v1.0/houses
+数据格式:json
+请求参数:
+参数名             是否必须        参数说明
+area_id             否           区域信息('aid','')
+start_date_str      否           用户选择的开始日期('sd','')
+end_date_str        否           用户选择的结束日期('ed','')
+sort_key            否           排序条件('sk','new')
+page                否           页数('p','1')
+
+
+返回结果:
+正确:
+{
+    errno=RET.OK,
+    errmsg='OK',
+    data={"houses":houses_json,"total_page":total_page,"current_page":page}
+}
+
+错误:
+{
+    errno=RET.DATAERR,
+    errmsg='日期格式错误'
+}
+
+
+
 
 

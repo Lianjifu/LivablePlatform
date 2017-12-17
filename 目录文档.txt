@@ -31,7 +31,7 @@ python manage.py db upgrade
 	__init__.py				项目应用初始化文件--应用程序实例、数据库实例、蓝图、日志等
 	constants.py			项目常量信息--数据库缓存信息、验证码、房屋信息等
 	models.py				项目模型类
-	web_page.py				视图函数--用来处理静态页面的访问
+	web_page.py				视图函数--处理静态页面的访问,在客户端中写入csrf_token
 
 3、项目/ihome/libs目录			说明
 	/yuntongxun				第三方扩展--发送短信

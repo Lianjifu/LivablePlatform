@@ -6,6 +6,7 @@ api = Blueprint('api', __name__)
 
 from . import register,profile,house
 
+
 # 请求钩子
 @api.after_request
 def after_request(response):

@@ -1,3 +1,4 @@
+
     #-*- coding: UTF-8 -*-
     #  Copyright (c) 2014 The CCP project authors. All Rights Reserved.
     #
@@ -9,6 +10,7 @@
     #  An additional intellectual property rights grant can be found
     #  in the file PATENTS.  All contributing project authors may
     #  be found in the AUTHORS file in the root of the source tree.
+
 
 import md5
 import base64

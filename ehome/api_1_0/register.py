@@ -21,6 +21,7 @@ import re
 import random
 
 
+# 图片验证码
 @api.route('/imagecode/<image_code_id>',methods=['GET'])
 def generate_image_code(image_code_id):
     """
@@ -49,6 +50,7 @@ def generate_image_code(image_code_id):
         response.headers['Content-Type'] = 'image/jpg'
         # 返回前端图片验证码
         return response
+
 
 # 发送短信
 @api.route('/smscode/<mobile>',methods=['GET'])

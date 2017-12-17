@@ -3,6 +3,7 @@
 import redis
 
 
+# 配置参数
 class Config:
     """基本配置参数"""
     SECRET_KEY = "TQ6uZxn+SLqiLgVimX838/VplIsLbEP5jV7vvZ+Ohqw="

@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-#项目启动文件
+
+
+# 项目启动文件
 from ehome import create_app, db
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from ehome import models
+
 
 app = create_app("development")
 

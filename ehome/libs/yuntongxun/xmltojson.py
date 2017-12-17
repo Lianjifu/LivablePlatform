@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
-#python xml.etree.ElementTree
+
+# python xml.etree.ElementTree
 
 import os
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
 
+
 class xmltojson:
-    #global var
-    #show log
+    # global var
+    # show log
     SHOW_LOG = True
-    #XML file
+    # XML file
     XML_PATH = None
     a={}
     m=[]
@@ -23,8 +25,8 @@ class xmltojson:
                 #print('start to parse the file : [{}]'.format(path))
         tree = ET.fromstring(path)
         return tree
-        #else:
-            #print('the path [{}] dose not exist!'.format(path))
+        # else:
+            # print('the path [{}] dose not exist!'.format(path))
     
     def get_element_tag(self,element):
         '''return the element tag if the element is not None.'''

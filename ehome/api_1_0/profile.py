@@ -1,4 +1,6 @@
 # coding=utf-8
+
+
 # 导入flask 内置的模块和方法
 from flask import request, jsonify, current_app, session,g
 # 导入自定义状态码
@@ -17,6 +19,7 @@ from ehome.utils.image_storage import storage
 from ehome import db, constants
 
 
+# 登录
 @api.route('/sessions', methods=['POST'])
 def login():
     """
@@ -242,6 +245,7 @@ def get_user_auth():
         return  jsonify(errno=RET.DBERR,errmsg='无效操作')
     # 返回结果，调用了模型类中的user.auth_to_dict()
     return jsonify(errno=RET.OK, errmsg='OK', data=user.auth_to_dict())
+
 
 @api.route('/session', methods=['DELETE'])
 @login_required

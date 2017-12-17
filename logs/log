@@ -476,3 +476,18 @@ INFO _internal.py:87  * Restarting with stat
 WARNING _internal.py:87  * Debugger is active!
 INFO _internal.py:87  * Debugger PIN: 278-984-999
 INFO _internal.py:87  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+INFO _internal.py:87  * Detected change in 'E:\\PycharmProjects\\Flask_Ehome\\ehome\\api_1_0\\register.py', reloading
+INFO _internal.py:87  * Restarting with stat
+WARNING _internal.py:87  * Debugger is active!
+INFO _internal.py:87  * Debugger PIN: 278-984-999
+INFO _internal.py:87  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+INFO _internal.py:87  * Detected change in 'E:\\PycharmProjects\\Flask_Ehome\\ehome\\libs\\yuntongxun\\xmltojson.py', reloading
+INFO _internal.py:87  * Restarting with stat
+WARNING _internal.py:87  * Debugger is active!
+INFO _internal.py:87  * Debugger PIN: 278-984-999
+INFO _internal.py:87  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+INFO _internal.py:87  * Detected change in 'E:\\PycharmProjects\\Flask_Ehome\\ehome\\models.py', reloading
+INFO _internal.py:87  * Restarting with stat
+WARNING _internal.py:87  * Debugger is active!
+INFO _internal.py:87  * Debugger PIN: 278-984-999
+INFO _internal.py:87  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
